@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from pytz import timezone
 from fpdf import FPDF
 from datetime import date, datetime
 import os
@@ -171,7 +172,6 @@ if selected_project:
             save_tasks(tasks_df, selected_date)
             st.success("Task removed successfully!")
 
-# Step 5: Generate PDF (same as before)
 if not tasks_df.empty:
     if st.button("Generate PDF"):
         class PDF(FPDF):
@@ -179,8 +179,13 @@ if not tasks_df.empty:
                 logo_path = "logo/sketch.png"
                 self.image(logo_path, 5, 4, 16)
                 self.set_font("Arial", style="B", size=14)
+
+                # Get the current time in IST
+                ist = timezone("Asia/Kolkata")
+                current_time_ist = datetime.now(ist).strftime('%d %B %Y')  # Only the date
+                
                 self.cell(180, 8, "SKETCHCOM DAILY DASHBOARD", ln=True, align="C")
-                self.cell(180, 8, f"Generated on: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True, align="C")
+                self.cell(180, 8, f"Generated on: {current_time_ist}", ln=True, align="C")  # Use IST date
                 self.ln(5)
 
             def add_project_section(self, project, tasks):
