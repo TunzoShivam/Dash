@@ -180,7 +180,7 @@ if not tasks_df.empty:
                 self.image(logo_path, 5, 4, 16)
                 self.set_font("Arial", style="B", size=14)
                 self.cell(180, 8, "SKETCHCOM DAILY DASHBOARD", ln=True, align="C")
-                self.cell(180, 8, f"Generated on: {datetime.now().strftime('%d %B %Y, %I:%M %p')}", ln=True, align="C")
+                self.cell(180, 8, f"Generated on: {datetime.now().strftime('%d %B %Y)}", ln=True, align="C")
                 self.ln(5)
 
             def add_project_section(self, project, tasks):
